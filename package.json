@@ -13,7 +13,14 @@
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.2.0",
-    "vuex": "^3.4.0"
+    "vuex": "^3.4.0",
+    "bootstrap": "^4.6.0",
+    "bootstrap-vue": "^2.21.2",
+    "vue-cookies-ts": "^1.5.19",
+    "axios": "^0.21.1",
+    "vuex-module-decorators": "^1.0.1",
+    "vuelidate": "^0.7.6",
+    "@types/vuelidate": "^0.7.14"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",
@@ -30,6 +37,8 @@
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "typescript": "~4.1.5",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "@types/jquery": "^3.5.5",
+    "jquery": "^3.6.0"
   }
 }
