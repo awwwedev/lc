@@ -1,5 +1,5 @@
 import {AxiosResponse} from "axios";
-import http from "@/common/http";
+import http from "../common/http";
 import BaseModel from "@/models/BaseModel";
 
 export default class User extends BaseModel{

@@ -1,4 +1,4 @@
-# lc
+# lc-v2
 
 ## Project setup
 ```

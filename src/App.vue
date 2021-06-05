@@ -25,7 +25,7 @@
         </template>
       </b-alert>
     </div>
-    <Login v-if="!$userIsLogged"/>
+    <Login v-if="false"/>
     <router-view v-else/>
   </div>
 

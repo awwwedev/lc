@@ -1,6 +1,6 @@
 import {Module, VuexModule, Action, Mutation} from 'vuex-module-decorators'
 import {AxiosResponse} from 'axios'
-import http from "@/common/http";
+import http from "../../common/http";
 import UserModel from "@/models/User";
 
 
