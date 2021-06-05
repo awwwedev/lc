@@ -1,6 +1,7 @@
 export default class BaseModel {
     created_at?: string
     updated_at?: string
+    id?: number
 
     // eslint-disable-next-line
     static prepareFormData (data: any, filter=false): FormData {
