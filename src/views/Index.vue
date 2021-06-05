@@ -37,16 +37,7 @@
       </b-col>
     </b-row>
     <Bill :current-realty="currentRealty" :bill-types="billTypes"/>
-    <b-card class="shadow-sm mb-5" header="Ваши задолжености">
-      <b-table triped hover :items="debt" :fields="debtFields ">
-        <template #cell(date)="data">
-          c <b class="  ">{{ data.item.date_from }}</b> по <b>{{ data.item.date_to }}</b>
-        </template>
-        <template #cell(actions)="">
-          <a href=""><b-icon icon="download"/></a>
-        </template>
-      </b-table>
-    </b-card>
+    <Debt :current-realty="currentRealty" :bill-types="billTypes"/>
     <b-card class="shadow-sm mb-5" header="Ваши счетчики">
       <b-list-group-item href="#" class="d-flex justify-content-between align-items-center">
         Вода
@@ -75,9 +66,10 @@ import RealtyObject from "@/models/1c/RealtyObject";
 import {mapGetters} from "vuex";
 import User from "@/models/User";
 import Bill from "@/components/parts/index/Bill.vue";
+import Debt from "@/components/parts/index/Debts.vue";
 
 @Component({
-  components: {Bill, BarChart},
+  components: { Debt, Bill, BarChart },
   computed: {
     ...mapGetters({
       $user: 'user/getUser'
@@ -85,27 +77,6 @@ import Bill from "@/components/parts/index/Bill.vue";
   }
 })
 export default class Index extends Vue {
-  debtFields = [
-    {
-      key: 'type',
-      label: 'Вид счета'
-    },
-    {
-      key: 'date',
-      label: 'Период'
-    },
-    {
-      key: 'actions',
-      label: '  '
-    }
-  ]
-  debt = [
-    {
-      type: 'Вода',
-      date_from: '01.04.2000',
-      date_to: '01.05.2000'
-    }
-  ]
   chartData = {
     labels: [
       'January',
