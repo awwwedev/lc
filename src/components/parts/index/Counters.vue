@@ -1,5 +1,5 @@
 <template>
-  <b-card class="shadow-sm mb-5" header="Ваши счетчики" v-if="currentRealty">
+  <b-card class="shadow-sm mb-5" header="Ваши счетчики">
     <b-list-group-item v-for="counter in counters" :key="counter.id" class="d-flex justify-content-between align-items-center">
       {{ billTypes[counter.type] }}
       <b-badge variant="primary" pill>{{ counter.value }}</b-badge>
@@ -30,7 +30,7 @@ export default class Counters extends  Vue {
     })
   }
 
-  @Watch('currentRealty')
+  @Watch('currentRealty', { immediate: true })
   watchCurrentRealty(): void {
     this.updateItems()
   }

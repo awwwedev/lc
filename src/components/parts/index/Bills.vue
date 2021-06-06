@@ -1,5 +1,5 @@
 <template>
-  <b-card class="shadow-sm mb-5" header="Ваши счета" v-if="currentRealty">
+  <b-card class="shadow-sm mb-5" header="Ваши счета">
     <DateTypeFilters v-model="formData" :bill-types="billTypes"/>
     <b-table triped hover :items="items" :fields="columns">
       <template #cell(actions)="{ item }">
@@ -56,7 +56,7 @@ export default class Bill extends Vue {
     })
   }
 
-  @Watch('currentRealty')
+  @Watch('currentRealty', { immediate: true })
   watchCurrentRealty(): void {
     this.updateItems()
   }

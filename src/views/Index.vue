@@ -36,16 +36,13 @@
         </b-card>
       </b-col>
     </b-row>
-    <Bills :current-realty="currentRealty" :bill-types="billTypes"/>
-    <Debts :current-realty="currentRealty" :bill-types="billTypes"/>
-    <Counters :current-realty="currentRealty" :bill-types="billTypes"/>
-    <b-card class="shadow-sm mb-5" header="Ваша статистика">
-      <BarChart :chart-data="chartData" :chartOptions="options"/>
-    </b-card>
+    <Bills v-if="currentRealty" :current-realty="currentRealty" :bill-types="billTypes"/>
+    <Debts v-if="currentRealty" :current-realty="currentRealty" :bill-types="billTypes"/>
+    <Counters v-if="currentRealty" :current-realty="currentRealty" :bill-types="billTypes"/>
+    <Statistic v-if="currentRealty" :current-realty="currentRealty"/>
   </div>
 </template>
 <script lang="ts">
-import BarChart from '@/components/charts/Bar.vue'
 import {Component, Vue} from "vue-property-decorator";
 import RealtyObject from "@/models/1c/RealtyObject";
 import {mapGetters} from "vuex";
@@ -53,10 +50,12 @@ import User from "@/models/User";
 import Bills from "@/components/parts/index/Bills.vue";
 import Debts from "@/components/parts/index/Debts.vue";
 import Counters from "@/components/parts/index/Counters.vue";
+import Statistic from "@/components/parts/index/Statistic.vue";
+import LineChart from "@/components/charts/LineChart.vue";
 
 
 @Component({
-  components: {Counters, Debts, Bills, BarChart },
+  components: {LineChart, Statistic, Counters, Debts, Bills},
   computed: {
     ...mapGetters({
       $user: 'user/getUser'
@@ -64,32 +63,6 @@ import Counters from "@/components/parts/index/Counters.vue";
   }
 })
 export default class Index extends Vue {
-  chartData = {
-    labels: [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December'
-    ],
-    datasets: [
-      {
-        label: 'Data One',
-        data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
-      }
-    ]
-  }
-  options = {
-    responsive: true,
-    maintainAspectRatio: false
-  }
   realty = [] as Array<RealtyObject>
   billTypes = {
     1: 'Вода',
@@ -107,7 +80,6 @@ export default class Index extends Vue {
     RealtyObject.getList().then(res => {
       this.realty = res.data
     })
-
   }
 }
 </script>

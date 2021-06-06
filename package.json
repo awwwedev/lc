@@ -20,11 +20,14 @@
     "vue-cookies-ts": "^1.5.19",
     "vue-property-decorator": "^9.1.2",
     "vue-router": "^3.2.0",
+    "vue-trend-chart": "^0.15.3",
     "vuelidate": "^0.7.6",
     "vuex": "^3.4.0",
     "vuex-module-decorators": "^1.0.1"
   },
   "devDependencies": {
+    "@types/chart.js": "^2.9.32",
+    "@types/jquery": "^3.5.5",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -36,12 +39,10 @@
     "@vue/eslint-config-typescript": "^7.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "jquery": "^3.6.0",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "typescript": "~4.1.5",
-    "vue-template-compiler": "^2.6.11",
-    "@types/jquery": "^3.5.5",
-    "jquery": "^3.6.0",
-    "@types/chart.js": "^2.9.32"
+    "vue-template-compiler": "^2.6.11"
   }
 }
