@@ -1,5 +1,21 @@
 <template>
   <div class="container pt-5">
+    <BModal :visible="isOpenedSupportModal" @hidden="isOpenedSupportModal = false">
+      <template #modal-header>
+        <h3>Обращение в техподдержку</h3>
+      </template>
+      <template>
+        <form>
+          <b-form-group label="Сообщение">
+            <b-form-textarea required rows="5" v-model="supportMessage"></b-form-textarea>
+          </b-form-group>
+        </form>
+      </template>
+      <template #modal-footer>
+        <b-button variant="primary" @click="onSendSupportMessage" :disabled="!supportMessage.length">Отправить</b-button>
+        <b-button variant="secondary" @click="isOpenedSupportModal = false">Отмена</b-button>
+      </template>
+    </BModal>
     <b-row cols-sm="1" cols-md="2" class="mb-5 align-items-stretch">
       <b-col sm="8" class="" >
         <b-card class="shadow-sm">
@@ -26,7 +42,8 @@
          <div class="d-flex flex-column justify-content-between h-100 ">
            <div class="">
              <h3>Добро пожаловать {{ userFio }}</h3>
-             <p>У вас есть вопросы? <a href="">Обратитесь в тех. поддержку</a></p>
+             <p>У вас есть вопросы? <a href="#" @click="isOpenedSupportModal = true">Обратитесь в тех. поддержку</a> </p>
+             <p><a href="#">Ваши сообщения (5)</a></p>
            </div>
 
            <div class="d-flex justify-content-end">
@@ -67,16 +84,23 @@ import http from "@/common/http";
 })
 export default class Index extends Vue {
   realty = [] as Array<RealtyObject>
+  isOpenedSupportModal = false
+  currentRealty = null as null | RealtyObject
+  $user!: User
+  supportMessage = ''
   billTypes = {
     1: 'Вода',
     2: 'Электричество',
     3: 'Газ'
   }
-  currentRealty = null as null | RealtyObject
-  $user!: User
+
 
   get userFio(): string {
     return this.$user.name as string
+  }
+
+  onSendSupportMessage(): void {
+    this.isOpenedSupportModal = false
   }
 
   onLogout(): void {
