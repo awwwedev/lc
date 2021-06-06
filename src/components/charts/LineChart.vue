@@ -3,6 +3,7 @@
               :grid="{ verticalLines: true,  horizontalLines: true }"
               :labels="{ xLabels: chartLabels, yLabels: chartLabels.length, yLabelsTextFormatter: val => Math.round(val * 100) / 100 }"
               :min="0"
+              height="90%"
   />
 </template>
 

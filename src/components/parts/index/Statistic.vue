@@ -1,5 +1,14 @@
 <template>
   <b-card class="shadow-sm mb-5 card-chart" header="Ваша статистика" ref="cardChart">
+    <b-form>
+      <b-form-group label="Счет за">
+        <b-form-select v-model="type">
+          <b-form-select-option v-for="id in Object.keys(billTypes)" :key="id" :value="id">
+            {{ billTypes[id] }}
+          </b-form-select-option>
+        </b-form-select>
+      </b-form-group>
+    </b-form>
     <LineChart v-if="chartWidth" :chart-data="chartData" :chart-labels="labels"/>
   </b-card>
 </template>
@@ -26,9 +35,11 @@ type ChartData = {
 })
 export default class Statistic extends Vue {
   @Prop({type: Object, required: true}) currentRealty!: RealtyObject
+  @Prop({ type: Object, required: true }) billTypes!: { [key: number]: string }
   @Ref('cardChart') $refCardChart!: HTMLElement
   chartWidth = 0
   chartData = [] as Array<ChartData>
+  type = 1
   labels = [
     'Январь',
     "Февраль",
@@ -46,39 +57,21 @@ export default class Statistic extends Vue {
 
   updateItems(): void {
     StatisticModel.getList({
-      object_id: this.currentRealty.id_1c as number
+      object_id: this.currentRealty.id_1c as number,
+      type: this.type
     }).then(res => {
-      console.log(res)
-/*      this.chartData = res.data.map((item) => {
-        return {
-          data: item.data as Array<number>,
-          smooth: true,
-          fill: true,
-          showPoints: true,
-          className: 'curve' + item.type
-        }
-      })*/
+      const data = Array(12).fill(0) as Array<number>
+      res.data.forEach(item => {
+        data[+(item.date || '').split('-')[1]] = item.value as number
+      })
+
       this.chartData = [
         {
-          data: [34, 57, 56, 45, 67, 53, 4, 56, 456, 9, 8, 6],
+          data,
           smooth: true,
           fill: true,
           showPoints: true,
-          className: "curve1"
-        },
-        {
-          data: [34, 86, 23, 45, 67, 53, 23, 56, 456, 9, 5, 6],
-          smooth: true,
-          fill: true,
-          showPoints: true,
-          className: "curve2"
-        },
-        {
-          data: [34, 57, 26, 45, 67, 53, 25, 56, 456, 9, 56, 6],
-          smooth: true,
-          fill: true,
-          showPoints: true,
-          className: "curve3"
+          className: 'curve' + 1
         }
       ]
     })
@@ -95,12 +88,16 @@ export default class Statistic extends Vue {
   watchCurrentRealty(): void {
     this.updateItems()
   }
+  @Watch('type')
+  watchType(): void {
+    this.updateItems()
+  }
 }
 </script>
 
 <style scoped lang="stylus">
 .card-chart {
-  height 600px
+  height 700px
 }
 
 </style>

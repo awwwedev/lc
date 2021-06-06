@@ -30,7 +30,7 @@
            </div>
 
            <div class="d-flex justify-content-end">
-             <b-button variant="secondary">Выход</b-button>
+             <b-button variant="secondary" @click="onLogout" >Выход</b-button>
            </div>
          </div>
         </b-card>
@@ -39,7 +39,7 @@
     <Bills v-if="currentRealty" :current-realty="currentRealty" :bill-types="billTypes"/>
     <Debts v-if="currentRealty" :current-realty="currentRealty" :bill-types="billTypes"/>
     <Counters v-if="currentRealty" :current-realty="currentRealty" :bill-types="billTypes"/>
-    <Statistic v-if="currentRealty" :current-realty="currentRealty"/>
+    <Statistic v-if="currentRealty" :current-realty="currentRealty" :bill-types="billTypes"/>
   </div>
 </template>
 <script lang="ts">
@@ -47,11 +47,14 @@ import {Component, Vue} from "vue-property-decorator";
 import RealtyObject from "@/models/1c/RealtyObject";
 import {mapGetters} from "vuex";
 import User from "@/models/User";
+import UserStore from "@/store/modules/user";
 import Bills from "@/components/parts/index/Bills.vue";
 import Debts from "@/components/parts/index/Debts.vue";
 import Counters from "@/components/parts/index/Counters.vue";
 import Statistic from "@/components/parts/index/Statistic.vue";
 import LineChart from "@/components/charts/LineChart.vue";
+import {getModule} from "vuex-module-decorators";
+import http from "@/common/http";
 
 
 @Component({
@@ -76,9 +79,17 @@ export default class Index extends Vue {
     return this.$user.name as string
   }
 
+  onLogout(): void {
+    getModule(UserStore, this.$store).logout()
+
+    delete http.defaults.headers['Authorization']
+    this.$cookies.remove('token')
+  }
+
   created(): void {
     RealtyObject.getList().then(res => {
       this.realty = res.data
+      this.currentRealty = res.data[0]
     })
   }
 }
