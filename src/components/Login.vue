@@ -98,7 +98,7 @@ export default class Login extends Mixins<Validation>(validationMixin, Validatio
             http.defaults.headers['Authorization'] = 'Bearer ' + token
 
             userModule.initUser().then(() => {
-              this.$router.push({name: 'admin.home'})
+              this.$router.push({name: 'index'})
             }).catch(() => {
               getModule(Notification, store).setData({
                 text: 'Произошла непредвиденная ошибка, обратитесть в администрацию',

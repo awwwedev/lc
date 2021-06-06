@@ -32,8 +32,8 @@ type config = { date_to: string, date_from: string, type: string }
 
 })
 export default class DateTypeFilters extends Vue {
-  @Prop({}) value!: config
-  @Prop({}) billTypes!: { [key: number]: string }
+  @Prop({ type: Object, required: true }) value!: config
+  @Prop({ type: Object, required: true }) billTypes!: { [key: number]: string }
 
   localValue = {} as config
 

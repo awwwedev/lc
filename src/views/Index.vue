@@ -36,24 +36,9 @@
         </b-card>
       </b-col>
     </b-row>
-    <Bill :current-realty="currentRealty" :bill-types="billTypes"/>
-    <Debt :current-realty="currentRealty" :bill-types="billTypes"/>
-    <b-card class="shadow-sm mb-5" header="Ваши счетчики">
-      <b-list-group-item href="#" class="d-flex justify-content-between align-items-center">
-        Вода
-        <b-badge variant="primary" pill>345345</b-badge>
-      </b-list-group-item>
-
-      <b-list-group-item href="#" class="d-flex justify-content-between align-items-center">
-        Электричество
-        <b-badge variant="primary" pill>456456</b-badge>
-      </b-list-group-item>
-
-      <b-list-group-item href="#" class="d-flex justify-content-between align-items-center">
-        Газ
-        <b-badge variant="primary" pill>145645</b-badge>
-      </b-list-group-item>
-    </b-card>
+    <Bills :current-realty="currentRealty" :bill-types="billTypes"/>
+    <Debts :current-realty="currentRealty" :bill-types="billTypes"/>
+    <Counters :current-realty="currentRealty" :bill-types="billTypes"/>
     <b-card class="shadow-sm mb-5" header="Ваша статистика">
       <BarChart :chart-data="chartData" :chartOptions="options"/>
     </b-card>
@@ -61,15 +46,17 @@
 </template>
 <script lang="ts">
 import BarChart from '@/components/charts/Bar.vue'
-import {Component, Vue, Watch} from "vue-property-decorator";
+import {Component, Vue} from "vue-property-decorator";
 import RealtyObject from "@/models/1c/RealtyObject";
 import {mapGetters} from "vuex";
 import User from "@/models/User";
-import Bill from "@/components/parts/index/Bill.vue";
-import Debt from "@/components/parts/index/Debts.vue";
+import Bills from "@/components/parts/index/Bills.vue";
+import Debts from "@/components/parts/index/Debts.vue";
+import Counters from "@/components/parts/index/Counters.vue";
+
 
 @Component({
-  components: { Debt, Bill, BarChart },
+  components: {Counters, Debts, Bills, BarChart },
   computed: {
     ...mapGetters({
       $user: 'user/getUser'
@@ -121,11 +108,6 @@ export default class Index extends Vue {
       this.realty = res.data
     })
 
-  }
-
-  @Watch('currentRealty')
-  watchCurrentRealty(realty: RealtyObject): void {
-    console.log(realty)
   }
 }
 </script>

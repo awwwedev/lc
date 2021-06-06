@@ -23,8 +23,8 @@ import DateTypeFilters from "@/components/parts/index/DateTypeFilters.vue";
   components: {DateTypeFilters}
 })
 export default class Bill extends Vue {
-  @Prop({}) currentRealty!: RealtyObject
-  @Prop({}) billTypes!: { [key: number]: string }
+  @Prop({ type: Object, required: true }) currentRealty!: RealtyObject
+  @Prop({ type: Object, required: true }) billTypes!: { [key: number]: string }
 
   formData = {} as { to: string, from: string, type: string }
   items = [] as Array<BillModel>

@@ -23,8 +23,8 @@ import RealtyObject from "@/models/1c/RealtyObject";
   components: {DateTypeFilters}
 })
 export default class Debt extends Vue {
-  @Prop({}) billTypes!: { [key: number]: string }
-  @Prop({}) currentRealty!: RealtyObject
+  @Prop({ type: Object, required: true }) billTypes!: { [key: number]: string }
+  @Prop({ type: Object, required: true }) currentRealty!: RealtyObject
 
   items = [] as Array<DebtModel>
   formData = {} as { to: string, from: string, type: string, object_id: string }
