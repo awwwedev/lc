@@ -1,15 +1,19 @@
 <template>
   <b-card class="shadow-sm mb-5 card-chart" header="Ваша статистика" ref="cardChart">
-    <b-form>
-      <b-form-group label="Счет за">
-        <b-form-select v-model="type">
-          <b-form-select-option v-for="id in Object.keys(billTypes)" :key="id" :value="id">
-            {{ billTypes[id] }}
-          </b-form-select-option>
-        </b-form-select>
-      </b-form-group>
-    </b-form>
-    <LineChart v-if="chartWidth" :chart-data="chartData" :chart-labels="labels"/>
+    <div class="h-100 card-chart__container">
+      <b-form>
+        <b-form-group label="Счет за">
+          <b-form-select v-model="type">
+            <b-form-select-option v-for="id in Object.keys(billTypes)" :key="id" :value="id">
+              {{ billTypes[id] }}
+            </b-form-select-option>
+          </b-form-select>
+        </b-form-group>
+      </b-form>
+      <div class="card-chart__chart-container">
+        <LineChart v-if="chartWidth" :chart-data="chartData" :chart-labels="labels"/>
+      </div>
+    </div>
   </b-card>
 </template>
 
@@ -20,15 +24,8 @@ import $ from "jquery";
 import StatisticModel from '@/models/1c/Statistic'
 import RealtyObject from "@/models/1c/RealtyObject";
 import LineChart from "@/components/charts/LineChart.vue";
+import {ChartData} from "@/common/types";
 
-
-type ChartData = {
-  data: Array<number>,
-  smooth: boolean,
-  fill: boolean,
-  showPoints: boolean,
-  className: string,
-}
 
 @Component({
   components: {LineChart, BarChart},
@@ -60,10 +57,20 @@ export default class Statistic extends Vue {
       object_id: this.currentRealty.id_1c as number,
       type: this.type
     }).then(res => {
-      const data = Array(12).fill(0) as Array<number>
+      let data = {} as { [key: number]: number }
+
       res.data.forEach(item => {
         data[+(item.date || '').split('-')[1]] = item.value as number
       })
+
+      const temp = Object.values(data).map((value, index, array) => {
+        if (index === 0) return 0
+        else return value - array[index - 1]
+      }, {})
+
+      data = Object.keys(data).reduce((acc, key, index) => {
+        return { ...acc, [key]: temp[index] }
+      }, {} as { [key: number]: number })
 
       this.chartData = [
         {
@@ -96,8 +103,14 @@ export default class Statistic extends Vue {
 </script>
 
 <style scoped lang="stylus">
-.card-chart {
+.card-chart
   height 700px
-}
+
+  &__chart-container
+    flex 1 1 100%
+
+  &__container
+    display flex
+    flex-direction column
 
 </style>

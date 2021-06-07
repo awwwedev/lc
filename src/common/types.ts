@@ -9,6 +9,14 @@ export type link = {
 
 export type itemCountInfo = { leftBound: number, rightBound: number }
 
+export type ChartData = {
+    data: { [key: number]: number | {[key: number]: number} },
+    smooth: boolean,
+    fill: boolean,
+    showPoints: boolean,
+    className: string,
+}
+
 export type notification = {
     title?: string;
     text?: string;
