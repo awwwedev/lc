@@ -1,21 +1,6 @@
 <template>
   <div class="container pt-5">
-    <BModal :visible="isOpenedSupportModal" @hidden="isOpenedSupportModal = false">
-      <template #modal-header>
-        <h3>Обращение в техподдержку</h3>
-      </template>
-      <template>
-        <form>
-          <b-form-group label="Сообщение">
-            <b-form-textarea required rows="5" v-model="supportMessage"></b-form-textarea>
-          </b-form-group>
-        </form>
-      </template>
-      <template #modal-footer>
-        <b-button variant="primary" @click="onSendSupportMessage" :disabled="!supportMessage.length">Отправить</b-button>
-        <b-button variant="secondary" @click="isOpenedSupportModal = false">Отмена</b-button>
-      </template>
-    </BModal>
+    <Chat :show="isOpenedSupportModal" @close="isOpenedSupportModal = false"/>
     <b-row cols-sm="1" cols-md="2" class="mb-5 align-items-stretch">
       <b-col sm="8" class="" >
         <b-card class="shadow-sm">
@@ -72,10 +57,11 @@ import Statistic from "@/components/parts/index/Statistic.vue";
 import LineChart from "@/components/charts/LineChart.vue";
 import {getModule} from "vuex-module-decorators";
 import http from "@/common/http";
+import Chat from "@/components/parts/index/Chat.vue";
 
 
 @Component({
-  components: {LineChart, Statistic, Counters, Debts, Bills},
+  components: {Chat, LineChart, Statistic, Counters, Debts, Bills},
   computed: {
     ...mapGetters({
       $user: 'user/getUser'

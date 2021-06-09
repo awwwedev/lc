@@ -19,7 +19,6 @@
 
 <script lang="ts">
 import {Component, Prop, Ref, Vue, Watch} from "vue-property-decorator";
-import BarChart from '@/components/charts/Bar.vue'
 import $ from "jquery";
 import StatisticModel from '@/models/1c/Statistic'
 import RealtyObject from "@/models/1c/RealtyObject";
@@ -28,7 +27,7 @@ import {ChartData} from "@/common/types";
 
 
 @Component({
-  components: {LineChart, BarChart},
+  components: {LineChart},
 })
 export default class Statistic extends Vue {
   @Prop({type: Object, required: true}) currentRealty!: RealtyObject
